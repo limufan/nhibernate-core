@@ -34,7 +34,14 @@ namespace NHibernate.Dialect.Schema
 
 		protected override string GetConstraintName(DataRow rs)
 		{
-			return Convert.ToString(rs["CONSTRAINT_NAME"]);
+			if (rs.Table.Columns.Contains("CONSTRAINT_NAME"))
+			{
+				return Convert.ToString(rs["CONSTRAINT_NAME"]);
+			}
+			else
+			{
+				return Convert.ToString(rs["constraint_name"]);
+			}
 		}
 
 		protected override string GetColumnName(DataRow rs)
@@ -92,7 +99,14 @@ namespace NHibernate.Dialect.Schema
 		public FirebirdForeignKeyMetadata(DataRow rs)
 			: base(rs)
 		{
-			Name = Convert.ToString(rs["CONSTRAINT_NAME"]);
+			if (rs.Table.Columns.Contains("CONSTRAINT_NAME"))
+			{
+				Name = Convert.ToString(rs["CONSTRAINT_NAME"]);
+			}
+			else
+			{
+				Name = Convert.ToString(rs["constraint_name"]);
+			}
 		}
 	}
 
